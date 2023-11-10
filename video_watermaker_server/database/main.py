@@ -39,7 +39,7 @@ async def upload_video(
         filename = sanitized_filename  # Use the sanitized filename
 
         try:
-            # insert_data(unique_id, filename)  # Assuming this function exists
+            insert_data(unique_id, filename)  # Assuming this function exists
             pass
         except Exception as e:
             print("Some error occurred while saving it in the database", e)
@@ -47,7 +47,7 @@ async def upload_video(
         file_path = file_path.replace("\\", "\\\\")
 
         # Apply watermark to the uploaded video
-        add_watermark(file_path, position_case=watermark_position)
+        add_watermark(unique_id, file_path, position_case=watermark_position)
 
         return JSONResponse(
             content={
