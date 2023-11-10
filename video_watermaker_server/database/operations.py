@@ -34,9 +34,9 @@ Base.metadata.create_all(bind=engine)
 
 
 # methods to be used for api and other files
-def insert_data(filename):
+def insert_data(uid, filename):
     with DbSession() as db:
-        new_upload = add_data(db=db, uid=None, filename=filename)
+        new_upload = add_data(db=db, uid=uid, filename=filename)
         print(
             f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
         )

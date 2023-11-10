@@ -1,10 +1,17 @@
 import cv2
 import os
 from operations import insert_processed_data
+import uuid
 
-def add_watermark(video_path, watermark_path, position_case):
-    output_dir = "video_watermaker_server/Processed/"
+
+def add_watermark(video_path, position_case):
+    watermark_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "logo.jpg"
+    )
+    output_dir = "video_storage/Processed"
     os.makedirs(output_dir, exist_ok=True)
+
+    unique_uid = str(uuid.uuid4())
 
     file_name_without_extension = os.path.splitext(os.path.basename(video_path))[0]
 
@@ -65,14 +72,10 @@ def add_watermark(video_path, watermark_path, position_case):
 
     video_capture.release()
     video_writer.release()
-    insert_processed_data(output_file_name, output_file_name)
+    insert_processed_data(unique_uid, output_file_name)
     print("Processing Finished")
 
 
-add_watermark(
-    "video_watermaker_server//Uploads//sample1.mp4",
-    "video_watermaker_server/Logos/logo.jpg",
-    position_case=2,  # Change this value to select the desired position
-)
-
-
+# add_watermark(
+#     "video_watermaker_server\\database\\video_storage\\Uploads\\sample1.mp4", 2
+# )
