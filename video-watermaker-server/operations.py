@@ -3,7 +3,7 @@ from models import UploadData
 from db import Session as DbSession, engine
 from models import Base
 
-
+# Database operations functions
 def add_data(db: Session, uid: str, filename: str):
     new_upload = UploadData(uid=uid, filename=filename)
     db.add(new_upload)
@@ -23,9 +23,15 @@ def print_all_data(db: Session):
 
 Base.metadata.create_all(bind=engine)
 
-with DbSession() as db:
-    new_upload = add_data(db=db, uid="123456", filename="example_file.mp4")
-    print(
-        f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
-    )
-    print_all_data(db=db)
+# methods to be used for api and other files
+def insert_data(filename):
+    with DbSession() as db:
+        new_upload = add_data(db=db, uid=None, filename=filename)
+        print(f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}")
+
+
+def show_all_data_upload_table():
+    with DbSession() as db:
+        print_all_data(db= db)
+
+show_all_data_upload_table()
