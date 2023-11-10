@@ -1,0 +1,3 @@
+{
+  "python.analysis.extraPaths": ["./video-watermaker-server/database"]
+}

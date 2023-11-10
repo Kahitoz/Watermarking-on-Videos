@@ -1,5 +1,7 @@
 import cv2
 import os
+from video_watermaker_server.database.operations import add_data_processed
+
 
 def add_watermark(video_path, watermark_path, position_case):
     output_dir = "video-watermaker-server/Processed/"
@@ -8,7 +10,6 @@ def add_watermark(video_path, watermark_path, position_case):
     # Extract the file name without extension
     file_name_without_extension = os.path.splitext(os.path.basename(video_path))[0]
 
-    # Append 'Processed' to the file name and add the extension '.mp4'
     output_file_name = f"{file_name_without_extension}Processed.mp4"
     output_path = os.path.join(output_dir, output_file_name)
 
@@ -66,6 +67,7 @@ def add_watermark(video_path, watermark_path, position_case):
 
     video_capture.release()
     video_writer.release()
+    InsertInTable(output_file_name)
     print("Processing Finished")
 
 
@@ -75,3 +77,7 @@ add_watermark(
     "video-watermaker-server/Logos/logo.jpg",
     position_case=2,  # Change this value to select the desired position
 )
+
+
+def InsertInTable(filename):
+    add_data_processed(filename)

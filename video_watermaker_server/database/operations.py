@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import UploadData
+from models import UploadData, ProcessedData
 from db import Session as DbSession, engine
 from models import Base
 
@@ -21,17 +21,37 @@ def print_all_data(db: Session):
         )
 
 
+def add_data_processed(db: Session, filename: str):
+    new_upload = ProcessedData(filename)
+    db.add(new_upload)
+    db.commit()
+    db.refresh(new_upload)
+    return new_upload
+
+
 Base.metadata.create_all(bind=engine)
+
 
 # methods to be used for api and other files
 def insert_data(filename):
     with DbSession() as db:
         new_upload = add_data(db=db, uid=None, filename=filename)
-        print(f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}")
+        print(
+            f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
+        )
+
+
+def insert_processed_data(filename):
+    with DbSession() as db:
+        new_upload = add_data_processed(db=db, filename=filename)
+        print(
+            f"Processed Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
+        )
 
 
 def show_all_data_upload_table():
     with DbSession() as db:
-        print_all_data(db= db)
+        print_all_data(db=db)
+
 
 show_all_data_upload_table()
