@@ -3,6 +3,7 @@ from models import UploadData, ProcessedData
 from db import Session as DbSession, engine
 from models import Base
 
+
 # Database operations functions
 def add_data(db: Session, uid: str, filename: str):
     new_upload = UploadData(uid=uid, filename=filename)
@@ -21,8 +22,8 @@ def print_all_data(db: Session):
         )
 
 
-def add_data_processed(db: Session, filename: str):
-    new_upload = ProcessedData(filename)
+def add_data_processed(db: Session, uid:str, filename: str):
+    new_upload = ProcessedData(uid = uid, filename = filename)
     db.add(new_upload)
     db.commit()
     db.refresh(new_upload)
@@ -41,9 +42,9 @@ def insert_data(filename):
         )
 
 
-def insert_processed_data(filename):
+def insert_processed_data(uid, filename):
     with DbSession() as db:
-        new_upload = add_data_processed(db=db, filename=filename)
+        new_upload = add_data_processed(db=db, uid=uid, filename=filename)
         print(
             f"Processed Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
         )
@@ -54,4 +55,4 @@ def show_all_data_upload_table():
         print_all_data(db=db)
 
 
-show_all_data_upload_table()
+# show_all_data_upload_table()
