@@ -1,0 +1,3 @@
+serverVenv
+**.pyc
+.vscode/settings.json
