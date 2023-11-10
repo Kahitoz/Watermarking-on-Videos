@@ -1,17 +1,13 @@
 import cv2
 import os
 from operations import insert_processed_data
-import uuid
 
-
-def add_watermark(video_path, position_case):
+def add_watermark(uid, video_path, position_case):
     watermark_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "logo.jpg"
     )
     output_dir = "video_storage/Processed"
     os.makedirs(output_dir, exist_ok=True)
-
-    unique_uid = str(uuid.uuid4())
 
     file_name_without_extension = os.path.splitext(os.path.basename(video_path))[0]
 
@@ -72,7 +68,7 @@ def add_watermark(video_path, position_case):
 
     video_capture.release()
     video_writer.release()
-    insert_processed_data(unique_uid, output_file_name)
+    insert_processed_data(uid, output_file_name)
     print("Processing Finished")
 
 
