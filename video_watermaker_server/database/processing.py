@@ -2,11 +2,12 @@ import cv2
 import os
 from operations import insert_processed_data
 
+
 def add_watermark(uid, video_path, position_case):
     watermark_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "logo.jpg"
     )
-    output_dir = "video_storage/Processed"
+    output_dir = "video_storage\\Processed"
     os.makedirs(output_dir, exist_ok=True)
 
     file_name_without_extension = os.path.splitext(os.path.basename(video_path))[0]
