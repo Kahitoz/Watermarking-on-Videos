@@ -5,8 +5,8 @@ from models import Base
 
 
 # Database operations functions
-def add_data(db: Session, uid: str, filename: str):
-    new_upload = UploadData(uid=uid, filename=filename)
+def add_data(db: Session, uid: str, uploadBy: str):
+    new_upload = UploadData(uid=uid, uploadBy=uploadBy)
     db.add(new_upload)
     db.commit()
     db.refresh(new_upload)
@@ -18,12 +18,12 @@ def print_all_data(db: Session):
     print("All data in 'upload_data' table:")
     for data in all_data:
         print(
-            f"UID: {data.uid}, Filename: {data.filename}, Upload Time: {data.uploadTime}"
+            f"UID: {data.uid}, UploadBy: {data.uploadBy}, Upload Time: {data.uploadTime}"
         )
 
 
-def add_data_processed(db: Session, uid:str, filename: str):
-    new_upload = ProcessedData(uid = uid, filename = filename)
+def add_data_processed(db: Session, uid: str):
+    new_upload = ProcessedData(uid=uid)
     db.add(new_upload)
     db.commit()
     db.refresh(new_upload)
@@ -34,20 +34,20 @@ Base.metadata.create_all(bind=engine)
 
 
 # methods to be used for api and other files
-def insert_data(uid, filename):
+def insert_data(uid, username):
     with DbSession() as db:
-        new_upload = add_data(db=db, uid=uid, filename=filename)
+        new_upload = add_data(
+            db=db, uid=uid, uploadBy=username
+        )  
         print(
-            f"Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
+            f"Data added successfully with UID: {new_upload.uid}, Username: {new_upload.uploadBy}"
         )
 
 
-def insert_processed_data(uid, filename):
+def insert_processed_data(uid):
     with DbSession() as db:
-        new_upload = add_data_processed(db=db, uid=uid, filename=filename)
-        print(
-            f"Processed Data added successfully with UID: {new_upload.uid}, Filename: {new_upload.filename}"
-        )
+        new_upload = add_data_processed(db=db, uid=uid)
+        print(f"Processed Data added successfully with UID: {new_upload.uid}")
 
 
 def show_all_data_upload_table():
