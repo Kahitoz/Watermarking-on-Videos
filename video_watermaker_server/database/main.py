@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Query, Form, Path
-from fastapi.responses import JSONResponse, FileResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from operations import insert_data, insert_processed_data
 from processing import add_watermark
 
