@@ -12,7 +12,7 @@ def add_watermark(uid, video_path, position_case):
 
     file_name_without_extension = os.path.splitext(os.path.basename(video_path))[0]
 
-    output_file_name = f"{file_name_without_extension}Processed.mp4"
+    output_file_name = f"{file_name_without_extension}.mp4"
     output_path = os.path.join(output_dir, output_file_name)
 
     video_capture = cv2.VideoCapture(video_path)
@@ -69,7 +69,7 @@ def add_watermark(uid, video_path, position_case):
 
     video_capture.release()
     video_writer.release()
-    insert_processed_data(uid, output_file_name)
+    insert_processed_data(uid)
     print("Processing Finished")
 
 
