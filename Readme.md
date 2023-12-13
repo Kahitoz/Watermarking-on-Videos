@@ -1,6 +1,6 @@
 # About this Project
 The project is the demonstration of how can we implement the watermark on the videos
-The project is mainly about buiding an api now much of the frontend part is paid attention
+The project is mainly about buiding an api not much of the frontend part is paid attention
 
 # Project Setup
 
